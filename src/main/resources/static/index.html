@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遗失物品展示</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .item {
+            width: 200px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .item img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .item-details {
+            margin-bottom: 10px;
+        }
+        .status {
+            font-weight: bold;
+            color: #007BFF; /* Blue for found */
+        }
+        .status.not-found {
+            color: #DC3545; /* Red for not found */
+        }
+        .filter-options {
+            margin-bottom: 20px;
+        }
+        .filter-options label {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="filter-options">
+    <label>
+        <input type="radio" name="status" value="all" checked> 所有物品
+    </label>
+    <label>
+        <input type="radio" name="status" value="found"> 已寻得失主
+    </label>
+    <label>
+        <input type="radio" name="status" value="not-found"> 未寻得失主
+    </label>
+</div>
+<div class="container" id="item-container">
+    <!-- Items will be dynamically added here -->
+</div>
+
+<script>
+    // Sample data for lost items
+    const lostItems = [
+        { id: 1, title: '黑色钱包', category: '钱包', description: '内有身份证和银行卡', status: 'found' },
+        { id: 2, title: '金色手表', category: '手表', description: '限量版手表', status: 'not-found' },
+        { id: 3, title: '蓝色背包', category: '背包', description: '内有书籍和笔记本电脑', status: 'found' },
+        // Add more items as needed
+    ];
+
+    // Function to display items based on filter
+    function displayItems(filter) {
+        const container = document.getElementById('item-container');
+        container.innerHTML = ''; // Clear previous items
+
+        lostItems.forEach(item => {
+            if (filter === 'all' || item.status === filter) {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('item');
+
+                const imgElement = document.createElement('img');
+                imgElement.src = `path_to_your_image_${item.id}.jpg`; // Replace with actual image paths
+                imgElement.alt = item.title;
+                itemElement.appendChild(imgElement);
+
+                const detailsElement = document.createElement('div');
+                detailsElement.classList.add('item-details');
+
+                const titleElement = document.createElement('h3');
+                titleElement.textContent = item.title;
+                detailsElement.appendChild(titleElement);
+
+                const categoryElement = document.createElement('p');
+                categoryElement.textContent = `类别: ${item.category}`;
+                detailsElement.appendChild(categoryElement);
+
+                const descriptionElement = document.createElement('p');
+                descriptionElement.textContent = `信息简介: ${item.description}`;
+                detailsElement.appendChild(descriptionElement);
+
+                const statusElement = document.createElement('p');
+                statusElement.classList.add('status');
+                if (item.status === 'found') {
+                    statusElement.textContent = '已寻得失主';
+                } else {
+                    statusElement.classList.add('not-found');
+                    statusElement.textContent = '未寻得失主';
+                }
+                detailsElement.appendChild(statusElement);
+
+                itemElement.appendChild(detailsElement);
+                container.appendChild(itemElement);
+            }
+        });
+    }
+
+    // Display all items initially
+    displayItems('all');
+
+    // Add event listener to radio buttons for filtering
+    const radios = document.querySelectorAll('input[name="status"]');
+    radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            const filter = radio.value;
+            displayItems(filter);
+        });
+    });
+</script>
+</body>
+</html>

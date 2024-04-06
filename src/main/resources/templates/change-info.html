@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Profile</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>User Profile</h1>
+<form action="/user/{nameId}/update" method="post" th:object="${userForm}">
+    <input type="hidden" name="id" th:value="${user.nameID}" />
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" th:value="${userForm.name}" required />
+    </div>
+    <div>
+        <label for="grade">Grade:</label>
+        <input type="text" id="grade" name="grade" th:value="${userForm.grade}" required />
+    </div>
+    <!-- 添加其他字段的输入项 -->
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园失物招领平台</title>
+</head>
+<body>
+<h1>拾物上传</h1>
+
+<form method="POST" action="/api/upload" enctype="multipart/form-data">
+    <div>
+        <label for="name">标题:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="category">类别:</label>
+        <input type="text" id="category" name="category" required>
+    </div>
+    <div>
+        <label for="lostcontent">详细描述:</label>
+        <textarea id="lostcontent" name="lostcontent" required></textarea>
+    </div>
+    <div>
+        <label for="picturename">照片:</label>
+        <input type="file" id="picturename" name="picturename" accept="image/*" required>
+    </div>
+    <div>
+        <label for="ownerID">Owner ID:</label>
+        <input type="text" id="ownerID" name="ownerID" required>
+    </div>
+    <div>
+        <button type="submit">上传</button>
+    </div>
+</form>
+
+<!-- 引入jQuery（可选），用于处理AJAX请求 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // 你可以在这里添加JavaScript代码来处理表单提交，例如使用AJAX进行异步上传
+    // 以下是一个简单的示例，使用jQuery的$.ajax函数提交表单数据
+    $('form').on('submit', function(event) {
+        event.preventDefault(); // 阻止表单默认的提交行为
+        var formData = new FormData(this); // 创建一个FormData对象来收集表单数据
+
+        $.ajax({
+            url: $(this).attr('action'), // 表单的action属性，即后端API的URL
+            type: 'POST', // 请求方法
+            data: formData, // 表单数据
+            processData: false, // 告诉jQuery不要去处理发送的数据
+            contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+            success: function(response) {
+                // 请求成功时的回调函数
+                console.log("Upload successful:", response);
+                // 在这里可以添加代码来处理成功上传后的逻辑，比如显示一个消息给用户
+            },
+            error: function(xhr, status, error) {
+                // 请求失败时的回调函数
+                console.error("Upload failed:", error);
+                // 在这里可以添加代码来处理上传失败的情况，比如显示一个错误消息给用户
+            }
+        });
+    });
+</script>
+</body>
+</html>

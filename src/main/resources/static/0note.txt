@@ -1,0 +1,7 @@
+index：主页
+
+lostimging:点开详情页面
+
+upload：上传失物信息
+
+个人中心
